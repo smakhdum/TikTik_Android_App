@@ -27,7 +27,6 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -42,7 +41,6 @@ import com.makhdum.tiktik.reminder.AlarmScheduler;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
-
 import java.util.Calendar;
 
 
@@ -51,8 +49,26 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
         DatePickerDialog.OnDateSetListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int EXISTING_VEHICLE_LOADER = 0;
-
+    // Values for orientation change
+    private static final String KEY_TITLE = "title_key";
+    private static final String KEY_TIME = "time_key";
+    private static final String KEY_DATE = "date_key";
+    private static final String KEY_REPEAT = "repeat_key";
+    private static final String KEY_REPEAT_NO = "repeat_no_key";
+    private static final String KEY_REPEAT_TYPE = "repeat_type_key";
+    private static final String KEY_ACTIVE = "active_key";
+    // Constant values in milliseconds
+    private static final long milMinute = 60000L;
+    private static final long milHour = 3600000L;
+    private static final long milDay = 86400000L;
+    private static final long milWeek = 604800000L;
+    private static final long milMonth = 2592000000L;
+    private static final String TAG = "MainActivity";
+    private static final int ERROR_DIALOG_REQUEST = 9001;
     GoogleMap tMap;
+    LatLng getLatLng = new LatLng(23.4139048, 91.1448992);
+    LatLng latLng;
+    boolean state = false;
     private Toolbar mToolbar;
     private EditText mTitleText;
     private TextView mDateText, mTimeText, mRepeatText, mRepeatNoText, mRepeatTypeText;
@@ -69,29 +85,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     private String mRepeatNo;
     private String mRepeatType;
     private String mActive;
-
     private Uri mCurrentReminderUri;
     private boolean mVehicleHasChanged = false;
-
-    // Values for orientation change
-    private static final String KEY_TITLE = "title_key";
-    private static final String KEY_TIME = "time_key";
-    private static final String KEY_DATE = "date_key";
-    private static final String KEY_REPEAT = "repeat_key";
-    private static final String KEY_REPEAT_NO = "repeat_no_key";
-    private static final String KEY_REPEAT_TYPE = "repeat_type_key";
-    private static final String KEY_ACTIVE = "active_key";
-
-    LatLng getLatLng=new LatLng(23.4139048,91.1448992);
-    // Constant values in milliseconds
-    private static final long milMinute = 60000L;
-    private static final long milHour = 3600000L;
-    private static final long milDay = 86400000L;
-    private static final long milWeek = 604800000L;
-    private static final long milMonth = 2592000000L;
-    LatLng latLng;
-
-
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -100,21 +95,14 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
         }
     };
 
-
-
-
-    private static final String TAG = "MainActivity";
-
-    private static final int ERROR_DIALOG_REQUEST = 9001;
-    boolean state=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_reminder);
-        state=getIntent().getBooleanExtra("state",false);
-        if(state)
-        getLatLng= getIntent().getExtras().getParcelable("latlng");
-        SupportMapFragment mapFragment= (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFrag);
+        state = getIntent().getBooleanExtra("state", false);
+        if (state)
+            getLatLng = getIntent().getExtras().getParcelable("latlng");
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFrag);
         mapFragment.getMapAsync(this);
         Intent intent = getIntent();
         mCurrentReminderUri = intent.getData();
@@ -129,23 +117,21 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
         } else {
 
             setTitle(getString(R.string.editor_activity_title_edit_reminder));
-
-
             getLoaderManager().initLoader(EXISTING_VEHICLE_LOADER, null, this);
         }
 
 
         // Initialize Views
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mTitleText = (EditText) findViewById(R.id.reminder_title);
-        mDateText = (TextView) findViewById(R.id.set_date);
-        mTimeText = (TextView) findViewById(R.id.set_time);
-        mRepeatText = (TextView) findViewById(R.id.set_repeat);
-        mRepeatNoText = (TextView) findViewById(R.id.set_repeat_no);
-        mRepeatTypeText = (TextView) findViewById(R.id.set_repeat_type);
-        mRepeatSwitch = (Switch) findViewById(R.id.repeat_switch);
-        mFAB1 = (FloatingActionButton) findViewById(R.id.starred1);
-        mFAB2 = (FloatingActionButton) findViewById(R.id.starred2);
+        mToolbar = findViewById(R.id.toolbar);
+        mTitleText = findViewById(R.id.reminder_title);
+        mDateText = findViewById(R.id.set_date);
+        mTimeText = findViewById(R.id.set_time);
+        mRepeatText = findViewById(R.id.set_repeat);
+        mRepeatNoText = findViewById(R.id.set_repeat_no);
+        mRepeatTypeText = findViewById(R.id.set_repeat_type);
+        mRepeatSwitch = findViewById(R.id.repeat_switch);
+        mFAB1 = findViewById(R.id.starred1);
+        mFAB2 = findViewById(R.id.starred2);
 
         // Initialize default values
         mActive = "true";
@@ -167,7 +153,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
         mTitleText.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -176,7 +163,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         // Setup TextViews using reminder values
@@ -230,8 +218,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
         getSupportActionBar().setHomeButtonEnabled(true);
 
 
-
-        if(isServicesOK()){
+        if (isServicesOK()) {
             init();
         }
 
@@ -239,10 +226,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     }
 
 
-
-
-    private void init(){
-        Button btnMap = (Button) findViewById(R.id.btnMap);
+    private void init() {
+        Button btnMap = findViewById(R.id.btnMap);
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -254,29 +239,28 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
         });
     }
 
-    public boolean isServicesOK(){
+    public boolean isServicesOK() {
         Log.d(TAG, "isServicesOK: checking google services version");
 
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(AddReminderActivity.this);
 
-        if(available == ConnectionResult.SUCCESS){
+        if (available == ConnectionResult.SUCCESS) {
             //everything is fine and the user can make map requests
             Log.d(TAG, "isServicesOK: Google Play Services is working");
             return true;
-        }
-        else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
             //an error occured but we can resolve it
             Log.d(TAG, "isServicesOK: an error occured but we can fix it");
             Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(AddReminderActivity.this, available, ERROR_DIALOG_REQUEST);
             dialog.show();
-        }else{
+        } else {
             Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();
         }
         return false;
     }
 
     @Override
-    protected void onSaveInstanceState (Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putCharSequence(KEY_TITLE, mTitleText.getText());
@@ -289,8 +273,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     }
 
     // On clicking Time picker
-    public void setTime(View v){
-        if(mCurrentReminderUri == null){
+    public void setTime(View v) {
+        if (mCurrentReminderUri == null) {
             Toast.makeText(this, "click again on the reminder list to set time alarm", Toast.LENGTH_LONG).show();
             return;
         }
@@ -306,8 +290,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     }
 
     // On clicking Date picker
-    public void setDate(View v){
-        if(mCurrentReminderUri == null){
+    public void setDate(View v) {
+        if (mCurrentReminderUri == null) {
             Toast.makeText(this, "click again on the reminder list to set date alarm", Toast.LENGTH_LONG).show();
             return;
         }
@@ -337,7 +321,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     // Obtain date from date picker
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        monthOfYear ++;
+        monthOfYear++;
         mDay = dayOfMonth;
         mMonth = monthOfYear;
         mYear = year;
@@ -347,18 +331,18 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
 
     // On clicking the active button
     public void selectFab1(View v) {
-        mFAB1 = (FloatingActionButton) findViewById(R.id.starred1);
+        mFAB1 = findViewById(R.id.starred1);
         mFAB1.setVisibility(View.GONE);
-        mFAB2 = (FloatingActionButton) findViewById(R.id.starred2);
+        mFAB2 = findViewById(R.id.starred2);
         mFAB2.setVisibility(View.VISIBLE);
         mActive = "true";
     }
 
     // On clicking the inactive button
     public void selectFab2(View v) {
-        mFAB2 = (FloatingActionButton) findViewById(R.id.starred2);
+        mFAB2 = findViewById(R.id.starred2);
         mFAB2.setVisibility(View.GONE);
-        mFAB1 = (FloatingActionButton) findViewById(R.id.starred1);
+        mFAB1 = findViewById(R.id.starred1);
         mFAB1.setVisibility(View.VISIBLE);
         mActive = "false";
     }
@@ -376,7 +360,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     }
 
     // On clicking repeat type button
-    public void selectRepeatType(View v){
+    public void selectRepeatType(View v) {
         final String[] items = new String[5];
 
         items[0] = "Minute";
@@ -402,7 +386,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     }
 
     // On clicking repeat interval button
-    public void setRepeatNo(View v){
+    public void setRepeatNo(View v) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Enter Number");
 
@@ -418,8 +402,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
                             mRepeatNo = Integer.toString(1);
                             mRepeatNoText.setText(mRepeatNo);
                             mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType + "(s)");
-                        }
-                        else {
+                        } else {
                             mRepeatNo = input.getText().toString().trim();
                             mRepeatNoText.setText(mRepeatNo);
                             mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType + "(s)");
@@ -466,11 +449,9 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
             case R.id.save_reminder:
 
 
-                if (mTitleText.getText().toString().length() == 0){
+                if (mTitleText.getText().toString().length() == 0) {
                     mTitleText.setError("Reminder Title cannot be blank!");
-                }
-
-                else {
+                } else {
                     saveReminder();
                     finish();
                 }
@@ -582,7 +563,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     }
 
     // On clicking the save button
-    public void saveReminder(){
+    public void saveReminder() {
 
      /*   if (mCurrentReminderUri == null ) {
             // Since no fields were modified, we can return early without creating a new reminder.
@@ -610,7 +591,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
         mCalendar.set(Calendar.MINUTE, mMinute);
         mCalendar.set(Calendar.SECOND, 0);
 
-        long selectedTimestamp =  mCalendar.getTimeInMillis();
+        long selectedTimestamp = mCalendar.getTimeInMillis();
 
         // Check repeat type
         if (mRepeatType.equals("Minute")) {
@@ -682,8 +663,6 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     }
 
 
-
-
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
 
@@ -734,7 +713,6 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
             String active = cursor.getString(activeColumnIndex);
 
 
-
             // Update the views on the screen with the values from the database
             mTitleText.setText(title);
             mDateText.setText(date);
@@ -744,11 +722,10 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
             mRepeatText.setText("Every " + repeatNo + " " + repeatType + "(s)");
             // Setup up active buttons
             // Setup repeat switch
-            if (repeat == null){
+            if (repeat == null) {
                 mRepeatSwitch.setChecked(false);
                 mRepeatText.setText(R.string.repeat_off);
-            }
-            else if (repeat.equals("false")) {
+            } else if (repeat.equals("false")) {
                 mRepeatSwitch.setChecked(false);
                 mRepeatText.setText(R.string.repeat_off);
 
@@ -768,7 +745,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        tMap=googleMap;
+        tMap = googleMap;
         tMap.addMarker(new MarkerOptions().position(getLatLng).title(""));
         tMap.moveCamera(CameraUpdateFactory.newLatLng(getLatLng));
         tMap.getMinZoomLevel();

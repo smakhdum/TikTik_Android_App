@@ -8,13 +8,16 @@ import android.provider.BaseColumns;
 
 public class AlarmReminderContract {
 
-    private AlarmReminderContract() {}
-
     public static final String CONTENT_AUTHORITY = "com.makhdum.tiktik";
-
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-
     public static final String PATH_VEHICLE = "reminder-path";
+
+    private AlarmReminderContract() {
+    }
+
+    public static String getColumnString(Cursor cursor, String columnName) {
+        return cursor.getString(cursor.getColumnIndex(columnName));
+    }
 
     public static final class AlarmReminderEntry implements BaseColumns {
 
@@ -38,9 +41,5 @@ public class AlarmReminderContract {
         public static final String KEY_REPEAT_TYPE = "repeat_type";
         public static final String KEY_ACTIVE = "active";
 
-    }
-
-    public static String getColumnString(Cursor cursor, String columnName) {
-        return cursor.getString( cursor.getColumnIndex(columnName) );
     }
 }

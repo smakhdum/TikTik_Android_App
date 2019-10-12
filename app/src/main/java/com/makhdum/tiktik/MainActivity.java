@@ -4,10 +4,8 @@ package com.makhdum.tiktik;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
-
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
@@ -25,32 +23,30 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.makhdum.tiktik.data.AlarmReminderContract;
 import com.makhdum.tiktik.data.AlarmReminderDbHelper;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private FloatingActionButton mAddReminderButton;
-    private Toolbar mToolbar;
+    private static final int VEHICLE_LOADER = 0;
     AlarmCursorAdapter mCursorAdapter;
     AlarmReminderDbHelper alarmReminderDbHelper = new AlarmReminderDbHelper(this);
     ListView reminderListView;
     ProgressDialog prgDialog;
     TextView reminderText;
     LatLng getLatLng;
-    private String alarmTitle = "";
     boolean b = false;
-
-    private static final int VEHICLE_LOADER = 0;
+    private FloatingActionButton mAddReminderButton;
+    private Toolbar mToolbar;
+    private String alarmTitle = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         b = getIntent().getBooleanExtra("state", false);
         if (b)
@@ -59,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mToolbar.setTitle(R.string.app_name);
 
 
-        reminderListView = (ListView) findViewById(R.id.list);
-        reminderText = (TextView) findViewById(R.id.reminderText);
+        reminderListView = findViewById(R.id.list);
+        reminderText = findViewById(R.id.reminderText);
 
 
         View emptyView = findViewById(R.id.empty_view);
@@ -88,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         });
 
 
-        mAddReminderButton = (FloatingActionButton) findViewById(R.id.fab);
+        mAddReminderButton = findViewById(R.id.fab);
 
         mAddReminderButton.setOnClickListener(new View.OnClickListener() {
             @Override

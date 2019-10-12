@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TikTik</string>
-    <string name="no_cardetails">Click on the button below to begin creating your reminder!</string>
+    <string name="no_row">TikTik : a Whisper of TIME  \n \n \n -CLICK ON BUTTON TO SETUP REMINDER-</string>
+    <string name="title_msg"> TikTik : a Whisper of TIME \n -CLICK ON TITLE TO SETUP REMINDER-\n</string>
     <string name="title_activity_add_reminder">Add Reminder</string>
     <string name="title_activity_edit_reminder">Edit Reminder</string>
     <string name="title_activity_licenses">Licenses</string>
@@ -40,5 +41,5 @@
 
     <string name="editor_update_reminder_failed">Error with updating reminder</string>
 
-    <string name="reminder_title">AlarmReminder</string>
+    <string name="reminder_title">TikTik Reminder</string>
 </resources>

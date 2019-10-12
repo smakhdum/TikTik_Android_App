@@ -56,7 +56,7 @@ public class AlarmReminderProvider extends ContentProvider {
                 break;
             case REMINDER_ID:
                 selection = AlarmReminderContract.AlarmReminderEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
 
                 cursor = database.query(AlarmReminderContract.AlarmReminderEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
@@ -128,7 +128,7 @@ public class AlarmReminderProvider extends ContentProvider {
                 break;
             case REMINDER_ID:
                 selection = AlarmReminderContract.AlarmReminderEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = database.delete(AlarmReminderContract.AlarmReminderEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
@@ -151,7 +151,7 @@ public class AlarmReminderProvider extends ContentProvider {
                 return updateReminder(uri, contentValues, selection, selectionArgs);
             case REMINDER_ID:
                 selection = AlarmReminderContract.AlarmReminderEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 return updateReminder(uri, contentValues, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("Update is not supported for " + uri);

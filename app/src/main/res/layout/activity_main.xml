@@ -8,30 +8,31 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:contentInsetLeft="0dp"
         app:contentInsetStart="16dp"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="?attr/colorPrimary" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 
     <TextView
         android:id="@+id/reminderText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:layout_below="@+id/toolbar"
-        android:textStyle="bold"
         android:gravity="center"
-        android:text="TikTik : The Whisper of TIME | সময়ের শব্দ \n -CLICK ON TITLE TO SETUP REMINDER-\n"/>
+        android:padding="16dp"
+        android:text="@string/title_msg"
+        android:textStyle="bold" />
+
     <ListView
         android:id="@+id/list"
-        android:layout_below="@+id/reminderText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/reminderText" />
 
     <RelativeLayout
         android:id="@+id/empty_view"
@@ -44,21 +45,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:padding="16dp"
             android:gravity="center"
-            android:textStyle="bold"
-            android:text="TikTik : The Whisper of TIME | সময়ের শব্দ \n \n \n -CLICK ON BUTTON TO SETUP REMINDER-"/>
+            android:padding="16dp"
+            android:text="@string/no_row"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal"/>
+        app:fabSize="normal" />
 
 </RelativeLayout>

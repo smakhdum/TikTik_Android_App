@@ -64,9 +64,9 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="2dp"
                 android:gravity="center"
-                android:text="@string/details"
+                android:text="@string/Reminder_details"
                 android:textColor="@color/abc_secondary_text_material_dark"
-                android:textSize="15dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
 
@@ -301,6 +301,10 @@
                 </LinearLayout>
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/toolbar_dropshadow" />
             <fragment
                 android:id="@+id/mapFrag"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -318,6 +322,11 @@
                 android:background="#009688"
                 android:text="Set Location"
                 android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@drawable/toolbar_dropshadow" />
         </LinearLayout>
 
     </ScrollView>
@@ -334,7 +343,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="80dp"
         android:clickable="true"
         android:onClick="selectFab1"
         app:fab_size="normal"
@@ -349,7 +358,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="80dp"
         android:clickable="true"
         android:onClick="selectFab2"
         app:fab_size="normal"

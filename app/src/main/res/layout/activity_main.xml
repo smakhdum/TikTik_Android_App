@@ -26,7 +26,7 @@
         android:layout_below="@+id/toolbar"
         android:textStyle="bold"
         android:gravity="center"
-        android:text="TikTik : The Whisper of TIME | সময়ের শব্দ \n \n -CLICK ON TITLE TO SETUP REMINDER-"/>
+        android:text="TikTik : The Whisper of TIME | সময়ের শব্দ \n -CLICK ON TITLE TO SETUP REMINDER-\n"/>
     <ListView
         android:id="@+id/list"
         android:layout_below="@+id/reminderText"
@@ -46,6 +46,7 @@
             android:layout_centerInParent="true"
             android:padding="16dp"
             android:gravity="center"
+            android:textStyle="bold"
             android:text="TikTik : The Whisper of TIME | সময়ের শব্দ \n \n \n -CLICK ON BUTTON TO SETUP REMINDER-"/>
     </RelativeLayout>
 

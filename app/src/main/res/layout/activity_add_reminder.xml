@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="#1E4568"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
@@ -304,22 +305,23 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/toolbar_dropshadow" />
             <fragment
                 android:id="@+id/mapFrag"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="222dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="1dp" />
 
             <Button
                 android:id="@+id/btnMap"
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp"
-                android:background="#009688"
+                android:background="#E91E63"
                 android:text="Set Location"
                 android:textStyle="bold" />
 
@@ -346,7 +348,7 @@
         android:layout_marginTop="80dp"
         android:clickable="true"
         android:onClick="selectFab1"
-        app:fab_size="normal"
+        app:fab_size="mini"
         fab:fab_colorNormal="@color/colorAccent"
         fab:fab_colorPressed="@color/fab_pressed"
         fab:fab_icon="@drawable/ic_notifications_off_grey600_24dp" />
@@ -361,7 +363,7 @@
         android:layout_marginTop="80dp"
         android:clickable="true"
         android:onClick="selectFab2"
-        app:fab_size="normal"
+        app:fab_size="mini"
         fab:fab_colorNormal="@color/colorAccent"
         fab:fab_colorPressed="@color/fab_pressed"
         fab:fab_icon="@drawable/ic_notifications_on_white_24dp" />

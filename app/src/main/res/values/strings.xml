@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TikTik</string>
-    <string name="no_row">TikTik : a Whisper of TIME  \n \n \n -CLICK ON BUTTON TO SETUP REMINDER-</string>
-    <string name="title_msg"> TikTik : a Whisper of TIME \n -CLICK ON TITLE TO SETUP REMINDER-\n</string>
+    <string name="no_row">TikTik | Whisper of TIME  \n \nClick The Button To Set Reminder</string>
+    <string name="title_msg"> TikTik | Whisper of TIME \n Click Title to Setup Reminder</string>
     <string name="title_activity_add_reminder">Add Reminder</string>
     <string name="title_activity_edit_reminder">Edit Reminder</string>
     <string name="title_activity_licenses">Licenses</string>

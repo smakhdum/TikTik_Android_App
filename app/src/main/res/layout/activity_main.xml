@@ -23,8 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
+        android:layout_marginTop="0dp"
+        android:background="#A33F51B5"
         android:gravity="center"
         android:padding="16dp"
+        android:textSize="20dp"
         android:text="@string/title_msg"
         android:textStyle="bold" />
 
@@ -32,9 +35,11 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/reminderText" />
+        android:layout_below="@+id/reminderText"></ListView>
 
     <RelativeLayout
+        android:layout_below="@+id/toolbar"
+        android:background="@drawable/alarm2"
         android:id="@+id/empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,10 +48,12 @@
         <TextView
             android:id="@+id/no_reminder_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:padding="16dp"
+            android:background="#5C3F51B5"
+            android:fontFamily="sans-serif-condensed-light"
+            android:textSize="20dp"
             android:text="@string/no_row"
             android:textStyle="bold" />
     </RelativeLayout>

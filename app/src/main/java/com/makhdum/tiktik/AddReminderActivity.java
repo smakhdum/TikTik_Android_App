@@ -749,7 +749,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
         tMap.addMarker(new MarkerOptions().position(getLatLng).title(""));
         tMap.moveCamera(CameraUpdateFactory.newLatLng(getLatLng));
         tMap.getMinZoomLevel();
-        tMap.animateCamera(CameraUpdateFactory.newLatLngZoom(getLatLng, 13.0f));
+        tMap.animateCamera(CameraUpdateFactory.newLatLngZoom(getLatLng, 13.5f));
 
     }
 }

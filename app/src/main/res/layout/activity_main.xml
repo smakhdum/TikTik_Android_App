@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#30375E"
     tools:context="com.makhdum.tiktik.MainActivity">
 
     <android.support.v7.widget.Toolbar
@@ -27,7 +28,7 @@
         android:background="#A33F51B5"
         android:gravity="center"
         android:padding="16dp"
-        android:textSize="20dp"
+        android:textSize="17dp"
         android:text="@string/title_msg"
         android:textStyle="bold" />
 
@@ -35,7 +36,7 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/reminderText"></ListView>
+        android:layout_below="@+id/reminderText" />
 
     <RelativeLayout
         android:layout_below="@+id/toolbar"

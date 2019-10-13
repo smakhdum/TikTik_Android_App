@@ -2,6 +2,7 @@ package com.makhdum.tiktik;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -175,7 +176,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 Intent intent = new Intent(MapActivity.this, MainActivity.class);
                 if (b) {
                     intent.putExtra("latlng", mPlace.getLatlng());
-                    intent.putExtra("state", true);
+                    intent.putExtra("state", b);
+                    SharedPreferences.Editor editor = getSharedPreferences("makhdum", MODE_PRIVATE).edit();
+                    editor.putFloat("lat", (float) mPlace.getLatlng().latitude);
+                    editor.putFloat("lon", (float) mPlace.getLatlng().longitude);
+                    editor.putBoolean("state", b);
+
+                    editor.apply();
                 }
                 startActivity(intent);
             }
@@ -433,6 +440,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void hideSoftKeyboard() {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    public void onBackPressed() {
+        finish();
     }
 }
 

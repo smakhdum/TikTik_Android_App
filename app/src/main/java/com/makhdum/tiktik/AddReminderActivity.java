@@ -8,6 +8,7 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -41,6 +43,7 @@ import com.makhdum.tiktik.reminder.AlarmScheduler;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
 import java.util.Calendar;
 
 
@@ -66,9 +69,10 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     private static final String TAG = "MainActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
     GoogleMap tMap;
-    LatLng getLatLng = new LatLng(23.4139048, 91.1448992);
-    LatLng latLng;
+    LatLng getLatLng = new LatLng(23.7502815, 90.3914647);
+    //LatLng latLng;
     boolean state = false;
+
     private Toolbar mToolbar;
     private EditText mTitleText;
     private TextView mDateText, mTimeText, mRepeatText, mRepeatNoText, mRepeatTypeText;
@@ -87,6 +91,7 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     private String mActive;
     private Uri mCurrentReminderUri;
     private boolean mVehicleHasChanged = false;
+    String MY_PREFS_NAME = "makhdum";
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -99,9 +104,11 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_reminder);
-        state = getIntent().getBooleanExtra("state", false);
-        if (state)
+        state = getIntent().getBooleanExtra("stateOne", true);
+        if (state) {
             getLatLng = getIntent().getExtras().getParcelable("latlng");
+
+        }
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFrag);
         mapFragment.getMapAsync(this);
         Intent intent = getIntent();
@@ -656,10 +663,8 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
     }
 
     // On pressing the back button
-    @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
+        finish();
     }
 
 
@@ -745,11 +750,31 @@ public class AddReminderActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        tMap = googleMap;
-        tMap.addMarker(new MarkerOptions().position(getLatLng).title(""));
-        tMap.moveCamera(CameraUpdateFactory.newLatLng(getLatLng));
-        tMap.getMinZoomLevel();
-        tMap.animateCamera(CameraUpdateFactory.newLatLngZoom(getLatLng, 13.5f));
+
+        SharedPreferences prefs = getSharedPreferences("makhdum", MODE_PRIVATE);
+        boolean b = prefs.getBoolean("state", true);
+        if (b) {
+            float lat = prefs.getFloat("lat", 0.43f);
+            float lon = prefs.getFloat("lon", 0.553f);
+            LatLng ll = new LatLng(lat, lon);
+            tMap = googleMap;
+            tMap.addMarker(new MarkerOptions().position(ll).title(""));
+            tMap.moveCamera(CameraUpdateFactory.newLatLng(ll));
+            tMap.getMinZoomLevel();
+            tMap.animateCamera(CameraUpdateFactory.newLatLngZoom(ll, 13.5f));
+
+
+        } else {
+            tMap = googleMap;
+            tMap.addMarker(new MarkerOptions().position(getLatLng).title(""));
+            tMap.moveCamera(CameraUpdateFactory.newLatLng(getLatLng));
+            tMap.getMinZoomLevel();
+            tMap.animateCamera(CameraUpdateFactory.newLatLngZoom(getLatLng, 13.5f));
+
+        }
+
+
 
     }
+
 }

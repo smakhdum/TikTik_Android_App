@@ -8,13 +8,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.View;
@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.makhdum.tiktik.data.AlarmReminderContract;
 import com.makhdum.tiktik.data.AlarmReminderDbHelper;
@@ -75,8 +76,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 // Set the URI on the data field of the intent
                 intent.setData(currentVehicleUri);
+                intent.putExtra("stateOne", true);
                 intent.putExtra("state", b);
-                intent.putExtra("latlng", getLatLng);
+                intent.putExtra("latlon", getLatLng);
 
                 startActivity(intent);
 
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mAddReminderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent intent = new Intent(v.getContext(), AddReminderActivity.class);
+                //Intent intent = new Intent(v.getContext(), AddReminderActivity.class);
                 //startActivity(intent);
                 addReminderTitle();
             }
@@ -186,5 +188,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void restartLoader() {
         getSupportLoaderManager().restartLoader(VEHICLE_LOADER, null, this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }
